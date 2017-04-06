@@ -3,9 +3,10 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zhao.ssm.dao.PersonDao">
+    <!--Person类型的参数传递进来，按照对应的属性赋值-->
     <insert id="add" parameterType="Person" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO person(`name`,age,birth,registerTime,salary)
-        VALUES(#{name},#{age},#{birth},#{registerTime},#{salary})
+        VALUES(#{name},#{age,jdbcType=INTEGER},#{birth,jdbcType=DATE},#{registerTime,jdbcType=TIMESTAMP},#{salary})
     </insert>
 
     <delete id="delete" parameterType="Integer">
@@ -17,13 +18,21 @@
         birth=#{birth},registerTime=#{registerTime},salary=#{salary}
         where id=#{id}
     </update>
-
+<!--若表中的字段和pojo属性不吻合，可以使用select 别名的方式-->
     <select id="getPersonById" parameterType="Integer" resultType="Person">
-        select * from person where id=#{id} and name=#{name}
+        select id,name,age,birth,registerTime,salary from person where id=#{id}
     </select>
-
-    <select id="getAllPerson" resultType="Person">
-        select * from person
+<!--若不使用别名，可以使用resultmap元素-->
+    <resultMap id="personMap" type="Person">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="age" column="age" javaType="int" jdbcType="INTEGER" />
+        <result property="birth" column="birth" jdbcType="DATE" javaType="java.util.Date"/>
+        <result property="registerTime" column="registerTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+        <result property="salary" column="salary"/>
+    </resultMap>
+    <select id="getAllPerson" resultMap="personMap">
+        select id,name,age,birth,registerTime,salary from person
     </select>
 </mapper>
 

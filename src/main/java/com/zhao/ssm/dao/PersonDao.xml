@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhao.ssm.dao.PersonDao">
+    <insert id="add" parameterType="Person" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO person(`name`,age,birth,registerTime,salary)
+        VALUES(#{name},#{age},#{birth},#{registerTime},#{salary})
+    </insert>
+
+    <delete id="delete" parameterType="Integer">
+        delete from person where id=#{id}
+    </delete>
+
+    <update id="update" parameterType="Person">
+        update person set name=#{name},age=#{age},
+        birth=#{birth},registerTime=#{registerTime},salary=#{salary}
+        where id=#{id}
+    </update>
+
+    <select id="getPersonById" parameterType="Integer" resultType="Person">
+        select * from person where id=#{id} and name=#{name}
+    </select>
+
+    <select id="getAllPerson" resultType="Person">
+        select * from person
+    </select>
+</mapper>
+
+

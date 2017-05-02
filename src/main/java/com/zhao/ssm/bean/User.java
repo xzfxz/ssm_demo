@@ -1,86 +1,77 @@
 package com.zhao.ssm.bean;
 
+import java.io.Serializable;
+import java.util.Date;
+
 /**
  * Created by zhao on 2017/3/27.
  */
-public class User {
-    private int id;
-    private String user_name;
-    private String password;
-    private int age;
+public class User implements Serializable{
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", user_name='" + user_name + '\'' +
-                ", password='" + password + '\'' +
-                ", age=" + age +
-                '}';
+    private static final long serialVersionUID = 1881152043703354194L;
+    private long uid;
+    private String uname;
+    private String upasswd;
+    private String address;
+
+    private String ip;
+    private Date logintime;
+
+    private Date birthday;
+
+    public long getUid() {
+        return uid;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        User user = (User) o;
-
-        if (id != user.id) return false;
-        if (age != user.age) return false;
-        if (!user_name.equals(user.user_name)) return false;
-        return password.equals(user.password);
-
+    public void setUid(long uid) {
+        this.uid = uid;
     }
 
-    @Override
-    public int hashCode() {
-        int result = id;
-        result = 31 * result + user_name.hashCode();
-        result = 31 * result + password.hashCode();
-        result = 31 * result + age;
-        return result;
+    public String getUname() {
+        return uname;
     }
 
-    public User(int id, String user_name, String password, int age) {
-        this.id = id;
-        this.user_name = user_name;
-        this.password = password;
-        this.age = age;
+    public void setUname(String uname) {
+        this.uname = uname;
     }
 
-    public User() {
+    public String getUpasswd() {
+        return upasswd;
     }
 
-    public int getId() {
-        return id;
+    public void setUpasswd(String upasswd) {
+        this.upasswd = upasswd;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public String getAddress() {
+        return address;
     }
 
-    public String getUser_name() {
-        return user_name;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
-    public void setUser_name(String user_name) {
-        this.user_name = user_name;
+    public String getIp() {
+        return ip;
     }
 
-    public String getPassword() {
-        return password;
+    public void setIp(String ip) {
+        this.ip = ip;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public Date getLogintime() {
+        return logintime;
     }
 
-    public int getAge() {
-        return age;
+    public void setLogintime(Date logintime) {
+        this.logintime = logintime;
     }
 
-    public void setAge(int age) {
-        this.age = age;
+    public Date getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
     }
 }

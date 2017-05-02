@@ -19,9 +19,8 @@
         <setting name="mapUnderscoreToCamelCase" value="true"/>
     </settings>
     <typeAliases>
-        <!-- 单独为某个POJO设置别名
-        <typeAlias type="com.zhao.ssm.bean.User" alias="User"/> -->
-        <typeAlias type="com.zhao.ssm.bean.Person" alias="Person"/>
+        <!-- 单独为某个POJO设置别名 -->
+        <typeAlias type="com.zhao.ssm.bean.User" alias="User"/>
         <!--批处理别名，扫描整个包下的类 -->
         <package name="com.zhao.ssm.bean"/>
     </typeAliases>
@@ -52,7 +51,7 @@
 
     <mappers>
         <!-- XML配置版-->
-        <!--<mapper resource="com/zhao/ssm/dao/PersonDao.xml"/>-->
+        <!--<mapper resource="com/zhao/ssm/dao/UserDao.xml"/>-->
         <!-- Annotation配置版-->
         <!--<mapper class="com.zhao.ssm.dao.BookDao"/>-->
         <!-- 注册mapper包下的所有mapper接口,此种方法要求mapper接口名称和mapper映射文件名称

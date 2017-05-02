@@ -10,11 +10,10 @@ import java.io.InputStream;
 import java.util.Date;
 import java.util.List;
 
-import com.zhao.ssm.bean.Book;
-import com.zhao.ssm.bean.Person;
+import com.zhao.ssm.bean.Article;
 import com.zhao.ssm.bean.User;
-import com.zhao.ssm.dao.PersonDao;
-import com.zhao.ssm.dao.BookDao;
+import com.zhao.ssm.dao.ArticleMapper;
+import com.zhao.ssm.dao.UserDao;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -31,7 +30,6 @@ public class TestMybatis
     public void init() throws IOException
     {
         String env="test";
-
         InputStream inputStream =  Resources.getResourceAsStream("mybatis-config.xml");
         sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream,env);
     }
@@ -42,13 +40,20 @@ public class TestMybatis
         try
         {
             sqlSession = sqlSessionFactory.openSession();
-            Book book = new Book();
-            BookDao bookDao = sqlSession.getMapper(BookDao.class);
-            book.setName("west_visit_story333");
-            book.setPrice(22.44);
-            bookDao.insertBook(book);
-            Book book1 = bookDao.getBook(1);
-            System.out.println(book1.toString());
+            Article article = new Article();
+            article.setAddtime(new Date());
+            article.setSortId(1);
+            article.setUid(1);
+            article.setTitle("title");
+            article.setContent("i am good");
+            article.setInfo("info..");
+            article.setIsdelete(1);
+            article.setKeys("good");
+
+
+            ArticleMapper mapper = sqlSession.getMapper(ArticleMapper.class);
+            mapper.insert(article);
+
             sqlSession.commit();
         } catch (Exception e){
             e.printStackTrace();
@@ -56,6 +61,7 @@ public class TestMybatis
             if(null !=sqlSession) sqlSession.close();
         }
     }
+
 
     @Test
     public void testAdd()
@@ -65,17 +71,17 @@ public class TestMybatis
         {
             sqlSession = sqlSessionFactory.openSession();
 
-            Person person = new Person();
-            person.setAge(23);
-            person.setBirth(new Date());
-            person.setName("小明12");
-            person.setRegisterTime(new Date());
-            person.setSalary(4500.55);
+            User user = new User();
+            user.setBirthday(new Date());
+            user.setUname("jim");
+            user.setUpasswd("jjim");
+            user.setAddress("lincheng_yageing");
+            user.setIp("1.1.2.3");
 
-            PersonDao mapper = sqlSession.getMapper(PersonDao.class);
-            mapper.add(person);
+            UserDao mapper = sqlSession.getMapper(UserDao.class);
+            mapper.add(user);
 
-            System.out.println(person.getId());
+            System.out.println(user.getUid());
 
             sqlSession.commit();
         } catch (Exception e){
@@ -93,7 +99,7 @@ public class TestMybatis
         {
             sqlSession = sqlSessionFactory.openSession();
 
-            PersonDao mapper = sqlSession.getMapper(PersonDao.class);
+            UserDao mapper = sqlSession.getMapper(UserDao.class);
             mapper.delete(3);
             sqlSession.commit();
         } catch (Exception e){
@@ -111,17 +117,19 @@ public class TestMybatis
         {
             sqlSession = sqlSessionFactory.openSession();
 
-            Person person = new Person();
-            person.setAge(23);
-            person.setBirth(new Date());
-            person.setName("李明23212");
-            person.setRegisterTime(new Date());
-            person.setSalary(2500.55);
-            person.setId(1);
+            Article article = new Article();
+            article.setAddtime(new Date());
+            article.setSortId(1);
+            article.setUid(1);
+            article.setTitle("title______");
+            article.setContent("i am good___");
+            article.setInfo("info..");
+            article.setIsdelete(1);
+            article.setKeys("good");
+            article.setId(1);
+            ArticleMapper mapper1 = sqlSession.getMapper(ArticleMapper.class);
 
-            PersonDao mapper = sqlSession.getMapper(PersonDao.class);
-            mapper.update(person);
-
+            mapper1.updateByPrimaryKeySelective(article);
             sqlSession.commit();
         } catch (Exception e){
             e.printStackTrace();
@@ -131,16 +139,17 @@ public class TestMybatis
     }
 
     @Test
-    public void testGetPersonById()
+    public void testGetUserById()
     {
         SqlSession sqlSession = null;
         try
         {
             sqlSession = sqlSessionFactory.openSession();
 
-            PersonDao mapper = sqlSession.getMapper(PersonDao.class);
-            Person person = mapper.getPersonById(1);
-            System.out.println(person.toString());
+            ArticleMapper mapper1 = sqlSession.getMapper(ArticleMapper.class);
+            Article article = mapper1.selectByPrimaryKey(1);
+
+            System.out.println(article.toString());
         } catch (Exception e){
             e.printStackTrace();
         }finally{
@@ -149,18 +158,18 @@ public class TestMybatis
     }
 
     @Test
-    public void testGetAllPerson()
+    public void testGetAllUser()
     {
         SqlSession sqlSession = null;
         try
         {
             sqlSession = sqlSessionFactory.openSession();
 
-            PersonDao mapper = sqlSession.getMapper(PersonDao.class);
-            List<Person> list = mapper.getAllPerson();
-            for (Person person : list)
+            UserDao mapper = sqlSession.getMapper(UserDao.class);
+            List<User> list = mapper.getAll();
+            for (User user : list)
             {
-                System.out.println(person.toString());
+                System.out.println(user.toString());
             }
         } catch (Exception e){
             e.printStackTrace();

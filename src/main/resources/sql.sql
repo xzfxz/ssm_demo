@@ -1,34 +1,46 @@
-DROP TABLE IF EXISTS `person`;
 
-CREATE TABLE `person` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `name` varchar(20) DEFAULT NULL,
-  `age` int(4) DEFAULT NULL,
-  `birth` date DEFAULT NULL,
-  `registerTime` datetime DEFAULT NULL,
-  `salary` double DEFAULT NULL,
+
+CREATE TABLE `user` (
+  `uid` int(10) NOT NULL AUTO_INCREMENT,
+  `uname` varchar(20) DEFAULT NULL,
+  `upasswd` varchar(20) DEFAULT NULL,
+  `address` varchar(60) DEFAULT NULL,
+  `ip` varchar(20) DEFAULT NULL,
+  `birthday` date DEFAULT null,
+  `logintime` datetime DEFAULT now(),
+  PRIMARY KEY (`uid`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `article` (
+  `id` INT(10) NOT NULL AUTO_INCREMENT,
+  `uid` INT(10) NOT NULL ,
+  `sort_id` INT(10) NOT NULL ,
+  `keys` VARCHAR(120) DEFAULT NULL,
+  `title` VARCHAR(200) NOT NULL ,
+  `info` VARCHAR(200),
+  `content`LONGTEXT DEFAULT NULL,
+  `addtime` DATETIME DEFAULT  now(),
+  `updatetime` DATETIME DEFAULT now(),
+  `scancount` int DEFAULT 0,
+  `ontop` int DEFAULT 0,
+  `isdelete` int DEFAULT 0,
+  `source` VARCHAR(200) DEFAULT NULL ,
+  `item1` VARCHAR(200) DEFAULT  NULL ,
+  `item2` VARCHAR(200) DEFAULT NULL ,
   PRIMARY KEY (`id`)
-)ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
-INSERT INTO person(NAME,age,birth,registerTime,salary) VALUES('李四',27,CURRENT_DATE(),NOW(),3000.05);
+CREATE TABLE `post` (
+  `pid` INT(10) NOT NULL AUTO_INCREMENT ,
+  `psource` VARCHAR(120) DEFAULT NULL ,
+  `pcontent` VARCHAR(200) DEFAULT NULL ,
+  PRIMARY KEY (`pid`)
+)ENGINE =innodb DEFAULT CHARACTER SET =utf8;
 
-DROP TABLE IF EXISTS `book`;
-CREATE TABLE `book` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `name` varchar(20) DEFAULT NULL,
-  `price` double DEFAULT NULL,
+CREATE TABLE `sort` (
+  `id` INT(10) NOT NULL AUTO_INCREMENT ,
+  `name` VARCHAR(120) DEFAULT NULL ,
+  `info` VARCHAR(200) DEFAULT NULL ,
+  `item1` VARCHAR(200) DEFAULT NULL ,
   PRIMARY KEY (`id`)
-)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
-
-INSERT INTO book(name,price) VALUES ("基督山伯爵",11.22),("呼啸山庄",22.12);
-
-DROP TABLE IF EXISTS `order`;
-CREATE TABLE `order`(
-  `oid` int(10) NOT NULL AUTO_INCREMENT,
-  `bid` INT(10) ,
-  `pid` INT(10) ,
-  `saleDate` date DEFAULT NULL ,
-  `saleCount` INT(10),
-  PRIMARY KEY (oid)
-)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
-INSERT INTO `order` (bid, pid, saleDate, saleCount) VALUES (1,1,current_date(),2);
+)ENGINE =innodb DEFAULT CHARACTER SET =utf8;

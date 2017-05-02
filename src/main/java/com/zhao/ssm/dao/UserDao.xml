@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhao.ssm.dao.UserDao">
+    <!--user类型的参数传递进来，按照对应的属性赋值-->
+
+    <insert id="add" parameterType="User" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO user(`uname`,`upasswd`,`address`,`ip`,birthday,logintime)
+        VALUES(#{uname},#{upasswd},#{address},#{ip},#{birthday,jdbcType=DATE},#{logintime,jdbcType=TIMESTAMP})
+    </insert>
+
+    <delete id="delete" parameterType="Integer">
+        delete from user where uid=#{uid}
+    </delete>
+
+    <update id="update" parameterType="User">
+        update user set `uname`=#{uname},`upasswd`=#{upasswd},`address`=#{address},`ip`=#{ip},
+        birthday=#{birthday},logintime=#{logintime}
+        where uid=#{uid}
+    </update>
+<!--若表中的字段和pojo属性不吻合，可以使用select 别名的方式-->
+    <select id="getById" parameterType="Long" resultType="User">
+        select uid,`uname`,`upasswd`,`ip`,`birthday`,`logintime`from `user` where uid=#{uid}
+    </select>
+<!--若不使用别名，可以使用resultmap元素-->
+    <resultMap id="userMap" type="User">
+        <id property="uid" column="uid"/>
+        <result property="uname" column="uname"/>
+        <result property="upasswd" column="upasswd"/>
+        <result property="address" column="address"/>
+        <result property="ip" column="ip"/>
+        <result property="birthday" column="birthday" jdbcType="DATE" javaType="java.util.Date"/>
+        <result property="logintime" column="logintime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <select id="getAll" resultMap="userMap">
+        select uid,uname,upasswd,address,ip,birthday,logintime from `user`
+    </select>
+</mapper>
+
+

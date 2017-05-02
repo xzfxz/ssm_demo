@@ -3,8 +3,8 @@ package com.zhao.ssm.test;
 /**
  * Created by zhao on 2017/3/29.
  */
-import com.zhao.ssm.bean.Person;
-import com.zhao.ssm.service.PersonService;
+import com.zhao.ssm.bean.User;
+import com.zhao.ssm.service.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,16 +22,17 @@ import java.util.Date;
 public class TestSpring {
 
     @Autowired
-    private PersonService personService;
+    private UserService userService;
 
     @Test
-    public void testPerson(){
-        Person person = new Person();
-        person.setAge(22);
-        person.setName("zzzz");
-        person.setBirth(new Date());
-        person.setRegisterTime(new Date());
-        personService.savePerson(person);
+    public void testUser(){
+        User user = new User();
+        user.setBirthday(new Date());
+        user.setUname("jim");
+        user.setUpasswd("jjim");
+        user.setAddress("lincheng_yageing");
+        user.setIp("1.1.2.3");
+        userService.saveUser(user);
 
     }
 }
